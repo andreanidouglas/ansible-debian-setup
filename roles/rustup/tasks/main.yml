@@ -1,0 +1,35 @@
+---
+- name: check if rustup already present
+  command: /home/cmte/.cargo/bin/rustup -V
+  register: rustup_already_downloaded
+
+
+- name: install rustup system requirements
+  become: true
+  apt: name={{ item }} state=latest
+  with_items:
+    - curl
+    - build-essential
+    - make
+    - acl
+
+- name: Define rustup user home
+  ansible.builtin.set_fact:
+    rustup_user_home: "/home/cmte"
+    rustup_exe: "/home/cmte/.cargo/bin/rustup"
+
+- name: install rustup
+  shell: |
+    set -o pipefail
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+  args:
+    creates: "{{ rustup_user_home }}/{{ rustup_cargo_home_suffix }}/bin/rustup"
+    executable: /bin/bash
+  when: rustup_already_downloaded != 0
+
+- name: set default profile
+  shell: |
+    set -ex
+    /home/cmte/.cargo/bin/rustup default nightly && 
+    /home/cmte/.cargo/bin/rustup target add wasm32-unknown-unknown && 
+    /home/cmte/.cargo/bin/rustup target add wasm32-wasi

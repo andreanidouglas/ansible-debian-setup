@@ -1,0 +1,9 @@
+- hosts: localhost
+  gather_facts: true
+  roles:
+    - { role: packages, tags: core }
+    - { role: dotfiles, tags: core }
+    - { role: rustup, tags: core }
+    - { role: golang, tags: core }
+    - { role: nodejs, tags: node }
+    - { role: neovim, tags: neovim }

@@ -1,0 +1,22 @@
+---
+- name: check if dotfiles are present
+  command: cat /home/cmte/dotfiles/run.sh
+  register: dotfiles_presence
+  ignore_errors: true
+
+- name: clone dotfiles
+  git:
+    repo: https://git.delta.labs.andreanidr.com/cmte/dotfiles
+    dest: /home/cmte/dotfiles
+    recursive: yes
+    update: yes
+    accept_hostkey: yes
+    version: frigg
+  tags:
+    - core
+
+- name: execute dotfiles
+  shell: |
+    cd /home/cmte/dotfiles && ./run.sh
+  tags:
+    - core

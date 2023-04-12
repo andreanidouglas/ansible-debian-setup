@@ -1,0 +1,21 @@
+---
+- name: Check go latest version
+  uri:
+    url: https://go.dev/VERSION?m=text
+    return_content: yes
+    body_format: raw
+  register: go_latest_version
+
+
+- name: check go version installed
+  command: go version
+  ignore_errors: true
+  register: go_installed_version
+
+- name: install go
+  become: true
+  shell: |
+    set -ex && rm -rf /usr/local/go && 
+    curl -4 -L --url 'https://go.dev/dl/{{ go_latest_version.content }}.linux-amd64.tar.gz' -o /tmp/go.tar.gz && 
+    tar -C /usr/local -xzf /tmp/go.tar.gz && rm /tmp/go.tar.gz 
+  when: ('go version ' ~ go_latest_version.content ~ ' linux/amd64') != go_installed_version.stdout
