@@ -12,6 +12,14 @@ Contains:
 
 # Usage:
 
+Run all packages with: (except neovim)
+
 ```bash
 $ ansible-playbook -K main.yml
+```
+
+or if you want neovim also
+
+```bash
+$ ansible-playbook -K main.yml --tags neovim 
 ```
