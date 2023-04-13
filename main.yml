@@ -5,5 +5,5 @@
     - { role: dotfiles, tags: core }
     - { role: rustup, tags: core }
     - { role: golang, tags: core }
-    - { role: nodejs, tags: node }
+    - { role: nodejs, tags: core }
     - { role: neovim, tags: neovim }
