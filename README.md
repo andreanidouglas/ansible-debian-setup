@@ -8,6 +8,7 @@ Contains:
 * Python (with virtualenv and venv)
 * C/C++ (cmake, make, meson, ninja)
 * NodeJs (using nvm)
+* Neovim (with Plug)
 
 # Usage:
 
