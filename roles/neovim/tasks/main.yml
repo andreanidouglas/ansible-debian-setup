@@ -1,7 +1,7 @@
 ---
 - name: check if neovim exists
   stat:
-    path: /usr/bin/nvim
+    path: /usr/local/bin/nvim
   register: nvim_path
 
 

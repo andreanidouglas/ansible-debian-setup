@@ -11,6 +11,7 @@
   become: true
   apt: name={{ item }} state=latest
   with_items:
+    - bash-completion
     - htop
     - vim
     - nano
@@ -31,6 +32,8 @@
     - gettext
     - rsync
     - cmake
+    - meson
+    - ninja-build
     - unzip
   tags:
     - core
