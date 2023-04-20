@@ -35,6 +35,8 @@
     - meson
     - ninja-build
     - unzip
+    - tmux
+    - pkg-config
   tags:
     - core
 
