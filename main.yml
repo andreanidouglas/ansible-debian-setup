@@ -7,3 +7,4 @@
     - { role: golang, tags: [always, core, lang] }
     - { role: nodejs, tags: [always, core, lang] }
     - { role: neovim, tags: [never, neovim] }
+    - { role: docker, tags: [never, docker] }    

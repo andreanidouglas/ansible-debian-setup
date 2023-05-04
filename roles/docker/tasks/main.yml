@@ -1,0 +1,44 @@
+---
+- name: Install all dependencies
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+    - lsb-release
+
+- name: Add GPG key for docker.com
+  become: true
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add apt repository
+  become: true
+  apt_repository:
+    repo: deb https://download.docker.com/linux/debian bullseye stable
+
+- name: Install docker and dependencies
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+
+- name: Ensure docker service is active
+  become: true
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
