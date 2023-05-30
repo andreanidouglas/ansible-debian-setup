@@ -6,12 +6,14 @@
 
 - name: install rustup system requirements
   become: true
-  apt: name={{ item }} state=latest
-  with_items:
-    - curl
-    - build-essential
-    - make
-    - acl
+  apt:
+    name: 
+      - curl
+      - build-essential
+      - make
+      - acl
+    state: latest
+    update_cache: true
 
 - name: Define rustup user home
   ansible.builtin.set_fact:
@@ -30,6 +32,6 @@
 - name: set default profile
   shell: |
     set -ex
-    /home/cmte/.cargo/bin/rustup default nightly && 
+    /home/cmte/.cargo/bin/rustup default stable && 
     /home/cmte/.cargo/bin/rustup target add wasm32-unknown-unknown && 
     /home/cmte/.cargo/bin/rustup target add wasm32-wasi
