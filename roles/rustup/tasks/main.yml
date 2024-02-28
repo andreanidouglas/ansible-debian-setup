@@ -2,7 +2,7 @@
 - name: check if rustup already present
   command: /home/cmte/.cargo/bin/rustup -V
   register: rustup_already_downloaded
-
+  ignore_errors: true
 
 - name: install rustup system requirements
   become: true
