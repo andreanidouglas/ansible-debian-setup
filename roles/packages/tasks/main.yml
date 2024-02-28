@@ -37,6 +37,12 @@
       - unzip
       - tmux
       - pkg-config
+      - clang
+      - llvm
+      - lld
+      - clangd
+      - clang-tidy
+      - clang-format
   tags:
   - core
 
