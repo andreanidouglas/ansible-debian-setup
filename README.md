@@ -6,20 +6,27 @@ Contains:
 * Rust (using rustup - default to nightly)
 * Golang (from go.dev)
 * Python (with virtualenv and venv)
-* C/C++ (cmake, make, meson, ninja)
+* C/C++ (cmake, make, meson, ninja, clang)
 * NodeJs (using nvm)
 * Neovim (with Plug)
+* Docker (Docker official repository)
 
 # Usage:
 
-Run all packages with: (except neovim)
+Run all packages with: (except neovim and docker)
 
 ```bash
 $ ansible-playbook -K main.yml
 ```
 
-or if you want neovim also
+for neovim:
 
 ```bash
 $ ansible-playbook -K main.yml --tags neovim 
+```
+
+for docker:
+
+```bash
+$ ansible-playbook -K main.yml --tags docker 
 ```
