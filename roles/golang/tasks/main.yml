@@ -12,10 +12,24 @@
   ignore_errors: true
   register: go_installed_version
 
+- name: delete current go installation
+  when: go_installed_version.stdout != "go version " ~ go_latest_version.content.splitlines()[0] ~ " linux/amd64"
+  register: install
+  become: true
+  file:
+    path: /usr/local/go
+    state: absent
+
 - name: install go
   become: true
   shell: |
-    set -ex && rm -rf /usr/local/go && 
-    curl -4 -L --url 'https://go.dev/dl/{{ go_latest_version.content }}.linux-amd64.tar.gz' -o /tmp/go.tar.gz && 
-    tar -C /usr/local -xzf /tmp/go.tar.gz && rm /tmp/go.tar.gz 
-  when: ('go version ' ~ go_latest_version.content ~ ' linux/amd64') != go_installed_version.stdout
+    set -ex && curl -4 -L --url {{ "https://go.dev/dl/" ~ go_latest_version.content.splitlines()[0] ~ ".linux-amd64.tar.gz" }} -o /tmp/go.tar.gz &&
+    tar -C /usr/local -xzf /tmp/go.tar.gz && rm /tmp/go.tar.gz
+  when: install is not skipped
+
+
+
+#shell: |
+#set -ex && rm -rf /usr/local/go && 
+#curl -4 -L --url 'https://go.dev/dl/~{{ go_latest_version.content.split("\n")[0] }}~.linux-amd64.tar.gz' -o /tmp/go.tar.gz && 
+#tar -C /usr/local -xzf /tmp/go.tar.gz && rm /tmp/go.tar.gz 
