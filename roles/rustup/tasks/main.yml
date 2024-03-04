@@ -29,9 +29,10 @@
     executable: /bin/bash
   when: rustup_already_downloaded != 0
 
-- name: set default profile
+- name: set and update default profile
   shell: |
     set -ex
+    /home/cmte/.cargo/bin/rustup update stable &&
     /home/cmte/.cargo/bin/rustup default stable && 
     /home/cmte/.cargo/bin/rustup target add wasm32-unknown-unknown && 
     /home/cmte/.cargo/bin/rustup target add wasm32-wasi
