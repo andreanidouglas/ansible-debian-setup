@@ -12,7 +12,7 @@
   when: node_exists.state != "directory"  
 
 - name: extract nodejs
-  unarchiver: 
+  unarchive: 
     src: /tmp/node.tar.xz
     dest: /tmp
   when: node_exists.state != "directory"  
