@@ -1,9 +1,46 @@
 ---
-- name: download nodejs-lts
-  shell: >
-    set -ex &&
-      curl -4 -L -O "https://nodejs.org/dist/v22.14.0/node-v22.14.0-linux-x64.tar.xz" &&
-      tar xvf node-v22.14.0-linux-x64.tar.xz &&
-      mv node-v22.14.0-linux-x64.tar.xz /home/cmte/.node
-      
+- name: check if node exists
+  file:
+    path: /home/cmte/.node/node-v22.14.0-linux-x64
+    state: directory
+  register: node_exists
 
+- name: download nodejs-lts
+  get_url:
+    url: https://nodejs.org/dist/v22.14.0/node-v22.14.0-linux-x64.tar.xz
+    dest: /tmp/node.tar.xz
+  when: node_exists.state != "directory"  
+
+- name: extract nodejs
+  unarchiver: 
+    src: /tmp/node.tar.xz
+    dest: /tmp
+  when: node_exists.state != "directory"  
+
+- name: create and set .node on home
+  file:
+    path: /home/cmte/.node
+    state: directory
+  when: node_exists.state != "directory"  
+
+- name: create bin inside .node
+  file:
+    path: /home/cmte/.node/bin
+    state: directory
+  when: node_exists.state != "directory"  
+
+- name: copy nodejs to .node
+  command:
+    cmd: mv /tmp/node-v22.14.0-linux-x64 /home/cmte/.node
+  when: node_exists.state != "directory"  
+
+- name: create symlink for node executables
+  file:
+    src: /home/cmte/.node/node-v22.14.0-linux-x64/bin/{{ item.src }}
+    dest: /home/cmte/.node/bin/{{ item.dest }}
+    state: link
+  loop:
+    { src: node, dest: node}
+    { src: npm, dest: npm}
+    { src: npx, dest: npx}
+    { src: corepack, dest: corepack}
