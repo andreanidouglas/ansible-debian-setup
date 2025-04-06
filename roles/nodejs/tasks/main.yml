@@ -40,7 +40,7 @@
     dest: /home/cmte/.node/bin/{{ item.dest }}
     state: link
   loop:
-    { src: node, dest: node}
-    { src: npm, dest: npm}
-    { src: npx, dest: npx}
-    { src: corepack, dest: corepack}
+    - { src: node, dest: node}
+    - { src: npm, dest: npm}
+    - { src: npx, dest: npx}
+    - { src: corepack, dest: corepack}
