@@ -5,6 +5,6 @@
     - { role: dotfiles, tags: [always, core] }
     - { role: rustup, tags: [always, core, lang] }
     - { role: golang, tags: [always, core, lang] }
-    - { role: nodejs, tags: [always, core, lang] }
+    - { role: nodejs, tags: [lang, node] }
     - { role: neovim, tags: [never, neovim] }
     - { role: docker, tags: [never, docker] }    
