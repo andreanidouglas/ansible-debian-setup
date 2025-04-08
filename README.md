@@ -7,7 +7,7 @@ Contains:
 * Golang (from go.dev)
 * Python (with virtualenv and venv)
 * C/C++ (cmake, make, meson, ninja, clang)
-* NodeJs (using nvm)
+* NodeJs (using LTS)
 * Neovim (with Plug)
 * Docker (Docker official repository)
 
@@ -17,6 +17,12 @@ Run all packages with: (except neovim and docker)
 
 ```bash
 $ ansible-playbook -K main.yml
+```
+
+for node:
+
+```bash
+$ ansible-playbook -K main.yml --tags node
 ```
 
 for neovim:
